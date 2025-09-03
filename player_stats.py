@@ -9,8 +9,8 @@ url_batting = "https://cricbuzz-cricket.p.rapidapi.com/stats/v1/player/{player_i
 url_bowling = "https://cricbuzz-cricket.p.rapidapi.com/stats/v1/player/{player_id}/bowling"
 
 headers = {
-    "x-rapidapi-key": "YOUR_RAPIDAPI_KEY",   # Replace with your key
-    "x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com"
+	"x-rapidapi-key": "183997c39emsh61e87dd455d739dp1d5ef2jsn07d7deebff44", 
+	"x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com"
 }
 
 st.set_page_config(page_title="Cricket Player Statistics", layout="wide")
@@ -68,7 +68,7 @@ if search_btn and player_name.strip():
                     with col3:
                         st.markdown("**Teams Played For**")
                         teams = player_data.get("teams", [])
-                        for t in teams:
+                        for t in teams: 
                             st.write("- ", t)
                 
                 # ---------------- BATTING STATS TAB ----------------

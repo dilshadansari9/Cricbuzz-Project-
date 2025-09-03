@@ -21,7 +21,7 @@ select_opr=st.selectbox('Select Operation',crud_list)
 if select_opr=="Read(View player)":
     st.header("View All Players")
     if st.button("Load All player"):
-        select_query = """SELECT * FROM venues;"""  # dummy query
+        select_query = """SELECT * FROM dummy_player;"""  # dummy query
         mycursor.execute(select_query)
         rows = mycursor.fetchall()   # fetch results
         if rows:
@@ -50,7 +50,7 @@ if select_opr=="Create(Add player)":
         matches = st.number_input('Matches',min_value=1,step=1)
     with col6:
         average = st.number_input("Average",format="%.2f") 
-        
+         
     if st.button("Add Player"):
         # 1. Check if player already exists
         check_query = "SELECT * FROM dummy_player WHERE Player_id = %s"
