@@ -6,10 +6,10 @@ import pandas as pd
 url_search = "https://cricbuzz-cricket.p.rapidapi.com/stats/v1/player/search"
 url_player = "https://cricbuzz-cricket.p.rapidapi.com/stats/v1/player/{player_id}"
 url_batting = "https://cricbuzz-cricket.p.rapidapi.com/stats/v1/player/{player_id}/batting"
-url_bowling = "https://cricbuzz-cricket.p.rapidapi.com/stats/v1/player/{player_id}/bowling"
+url_bowling = "https://cricbuzz-cricket.p.rapidapi.com/stats/v1/player/{player_id}/bowling" 
 
 headers = {
-	"x-rapidapi-key": "183997c39emsh61e87dd455d739dp1d5ef2jsn07d7deebff44", 
+	"x-rapidapi-key": "39509eb435mshde3d740b1db062ep11fa7cjsn5ae8931e3c2b",
 	"x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com"
 }
 
@@ -71,26 +71,31 @@ if search_btn and player_name.strip():
                     
                     if bat_resp.status_code == 200:
                         bat_data = bat_resp.json()
-                        if "stats" in bat_data and len(bat_data["stats"]) > 0:
-                            batting_stats = []
-                            for s in bat_data["stats"]:
-                                row = {
-                                    "Format": s.get("format", "N/A"),
-                                    "Matches": s.get("matches", "-"),
-                                    "Innings": s.get("innings", "-"),
-                                    "Runs": s.get("runs", "-"),
-                                    "Avg": s.get("average", "-"),
-                                    "SR": s.get("strikeRate", "-"),
-                                    "100s": s.get("hundreds", "-"),
-                                    "50s": s.get("fifties", "-"),
-                                    "HS": s.get("highScore", "-")
-                                }
-                                batting_stats.append(row)
-                            st.dataframe(pd.DataFrame(batting_stats))
-                        else:
-                            st.warning("No batting stats available.")
-                    else:
-                        st.error("Error fetching batting stats.")
+                        batting_stats = [] 
+                        table_header = bat_data['headers']
+                        for row_data in bat_data['values']:
+                            row = {}
+                            for i, value in enumerate(row_data['values']):
+                                row[table_header[i]] = value
+                            batting_stats.append(row)
+
+                        formatted_batting_stats = []
+                        for row in batting_stats:
+                            formatted_row = {
+                                "Format": row["ROWHEADER"],
+                                "Test": row["Test"],
+                                "ODI": row["ODI"],
+                                "T20": row["T20"],
+                                "IPL": row["IPL"]
+                            }
+                            formatted_batting_stats.append(formatted_row)
+
+                        df = pd.DataFrame(formatted_batting_stats)
+                        # st.dataframe(df)
+                        st.table(df)
+                        st.write(f"For more Info visit here: {bat_data['appIndex']['webURL']}")
+                        
+
                 
                 # ---------------- BOWLING STATS TAB ----------------
                 with tab3:
@@ -99,23 +104,26 @@ if search_btn and player_name.strip():
                     
                     if bowl_resp.status_code == 200:
                         bowl_data = bowl_resp.json()
-                        if "stats" in bowl_data and len(bowl_data["stats"]) > 0:
-                            bowling_stats = []
-                            for s in bowl_data["stats"]:
-                                row = {
-                                    "Format": s.get("format", "N/A"),
-                                    "Matches": s.get("matches", "-"),
-                                    "Innings": s.get("innings", "-"),
-                                    "Wickets": s.get("wickets", "-"),
-                                    "Avg": s.get("average", "-"),
-                                    "Econ": s.get("economy", "-"),
-                                    "BBI": s.get("bestInnings", "-"),
-                                    "4W": s.get("fourWkts", "-"),
-                                    "5W": s.get("fiveWkts", "-")
-                                }
-                                bowling_stats.append(row)
-                            st.dataframe(pd.DataFrame(bowling_stats))
-                        else:
-                            st.warning("No bowling stats available.")
-                    else:
-                        st.error("Error fetching bowling stats.")
+                        bowling_stats = [] 
+                        table_header = bowl_data['headers'] 
+                        for row_data in bowl_data['values']:
+                            row = {}
+                            for i, value in enumerate(row_data['values']):
+                                row[table_header[i]] = value
+                            bowling_stats.append(row)
+
+                        formatted_bowling_stats = []
+                        for row in bowling_stats:
+                            formatted_row = {
+                                "Format": row["ROWHEADER"],
+                                "Test": row["Test"],
+                                "ODI": row["ODI"],
+                                "T20": row["T20"],
+                                "IPL": row["IPL"]
+                            }
+                            formatted_bowling_stats.append(formatted_row)
+
+                        df = pd.DataFrame(formatted_bowling_stats)
+                        # st.dataframe(df)
+                        st.table(df)
+                        st.write(f"For more Info visit here: {bowl_data['appIndex']['webURL']}")

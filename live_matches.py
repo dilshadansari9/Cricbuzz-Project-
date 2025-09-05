@@ -12,7 +12,7 @@ import requests
 url = "https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live"
 
 headers = {
-	"x-rapidapi-key": "183997c39emsh61e87dd455d739dp1d5ef2jsn07d7deebff44",
+	"x-rapidapi-key": "39509eb435mshde3d740b1db062ep11fa7cjsn5ae8931e3c2b",
 	"x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com"
 }
 
@@ -114,12 +114,12 @@ if page=='Live Score':
 
     if st.button("🏏 Get full info"):
 
-        # Batting + Bowling details from scorecard API
+
         score_url = f"https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/{selected_match['match_id']}/hscard" 
         response = requests.get(score_url, headers=headers)
         score_data = response.json()
 
-        # Loop through both innings
+
         for inning in score_data.get("scoreCard", []):
             batting_team = inning['batTeamDetails']['batTeamName']
             bowling_team = inning['bowlTeamDetails']['bowlTeamName']
@@ -166,30 +166,4 @@ if page=='Live Score':
                 st.warning(f"Bowling for {bowling_team} not started yet.")
 
             st.markdown("---")
-
-
-# This is for venues 
-    venues=[]
-    for series_match in type_match.get("seriesMatches", []):
-        series_data = series_match.get("seriesAdWrapper", {})
-        series_id = series_data.get("seriesId")
-        series_name = series_data.get("seriesName")
-
-        for match in series_data.get("matches", []):
-            info = match.get("matchInfo", {})
-            # This is to get the venue details 
-            venue_info=info.get("venueInfo", {})
-            venue_id=venue_info.get('id')
-            venue_name=venue_info.get('name')
-            city=venue_info.get('city')
-            country=venue_info.get('Unknown')
-            venues.append({
-                'name':venue_name,
-                'venue_id':venue_id,
-                'venue_city':city,
-                'venue_country':country, 
-            })
-
-# This is my code. I want to modify this code. As i am fetching the data for the teams those who are bowling and batting. But I want to fetch the data for both teams. show batting of team1 one and bowling of team2. After that show the batting of team2 then bowling of team1. Modify this code and make the changes accordingly
-
 
