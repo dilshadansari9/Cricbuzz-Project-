@@ -2,7 +2,7 @@ import streamlit as st
 import requests 
 import pandas as pd 
 st.title("⚡ Live Matches")
-st.write("This page will show live match updates from Cricbuzz API.")
+st.write("This page  shows live match updates from Cricbuzz API.") 
 
 
 
@@ -137,7 +137,7 @@ if page=='Live Score':
                         'Balls': batsman['balls'],
                         '4s': batsman['fours'],
                         '6s': batsman['sixes'],
-                        'SR': batsman['strikeRate'],
+                        'SR': f"{float(batsman['strikeRate']):.2f}",
                         'Status': batsman['outDesc'] 
                     })
                 df_batting = pd.DataFrame(batting_list)
@@ -153,11 +153,11 @@ if page=='Live Score':
                 for bowler_id, bowler in bowlers_data.items():
                     bowling_list.append({
                         'Name': bowler['bowlName'],
-                        'Overs': bowler['overs'],
+                        'Overs': f"{float(bowler['overs']):.1f}",
                         'Maidens': bowler['maidens'],
                         'Runs': bowler['runs'],
                         'Wickets': bowler['wickets'],
-                        'Economy': bowler['economy']
+                        'Economy': f"{float(bowler['economy']):.2f}"
                     })
                 df_bowling = pd.DataFrame(bowling_list)
                 st.markdown(f"**Bowling - {bowling_team}**")

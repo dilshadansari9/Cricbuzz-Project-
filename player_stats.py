@@ -64,14 +64,7 @@ if search_btn and player_name.strip():
                         st.write("Date of Birth:", player_data.get("DoB", "N/A"))
                         st.write("Birth Place:", player_data.get("birthPlace", "N/A"))
                         st.write("Height:", player_data.get("height", "N/A"))
-                    
-                    with col3:
-                        st.markdown("**Teams Played For**")
-                        teams = player_data.get("teams", [])
-                        for t in teams: 
-                            st.write("- ", t)
-                
-                # ---------------- BATTING STATS TAB ----------------
+
                 with tab2:
                     st.subheader("📈 Batting Statistics")
                     bat_resp = requests.get(url_batting.format(player_id=player_id), headers=headers)

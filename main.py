@@ -3,7 +3,7 @@ import runpy
 
 
 st.sidebar.title("Navigation")
-option=st.sidebar.selectbox("Selcet the page.. ",["Introduction", "CRUD Operations", "Live Matches", "Player Stats", "SQL Queries"])
+option=st.sidebar.selectbox("Selcet the page.. ",["Introduction","Live Matches", "CRUD Operations",  "Player Stats", "SQL Queries"])
 
 if option=='Introduction':
     st.title("🏏 Cricbuzz Project Dashboard")

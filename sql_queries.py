@@ -8,7 +8,7 @@ def get_connection():
     return pymysql.connect(
         host="localhost",
         user="root",
-        password="aiktc@1234",
+        password="aiktc@1234", 
         database="cricbuzz"
     )
 
@@ -136,4 +136,4 @@ if st.button("Run Query"):
     columns = [desc[0] for desc in cursor.description]
     df = pd.DataFrame(result, columns=columns)
     st.dataframe(df)
-    conn.close()
+    conn.close() 
